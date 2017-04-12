@@ -18,7 +18,7 @@ module.exports = function(config) {
       'node_modules/qunitjs/qunit/qunit.css',
       'node_modules/sinon/pkg/sinon.js',
       'node_modules/jquery/dist/jquery.js',
-      'node_modules/underscore/underscore.js',
+      'node_modules/lodash/lodash.js',
       'node_modules/backbone/backbone.js',
       'lib/backbone.paginator.js',
       'test/setup/*.js',

@@ -687,7 +687,7 @@
   });
 
   QUnit.test('Underscore methods', function(assert) {
-    assert.expect(21);
+    assert.expect(20);
     assert.equal(col.map(function(model){ return model.get('label'); }).join(' '), 'a b c d');
     assert.equal(col.some(function(model){ return model.id === 100; }), false);
     assert.equal(col.some(function(model){ return model.id === 0; }), true);
@@ -695,9 +695,9 @@
     assert.equal(col.reduceRight(function(m1, m2) {return m1.id > m2.id ? m1 : m2;}).id, 3);
     assert.equal(col.indexOf(b), 1);
     assert.equal(col.size(), 4);
-    assert.equal(col.rest().length, 3);
-    assert.ok(!_.includes(col.rest(), a));
-    assert.ok(_.includes(col.rest(), d));
+    assert.equal(col.tail().length, 3);
+    assert.ok(!_.includes(col.tail(), a));
+    assert.ok(_.includes(col.tail(), d));
     assert.ok(!col.isEmpty());
     assert.ok(!_.includes(col.without(d), d));
 
@@ -716,7 +716,6 @@
     assert.deepEqual(col.groupBy(function(model){ return model.id; })[first.id], [first]);
     assert.deepEqual(col.countBy(function(model){ return model.id; }), {0: 1, 1: 1, 2: 1, 3: 1});
     assert.deepEqual(col.sortBy(function(model){ return model.id; })[0], col.at(3));
-    assert.ok(col.indexBy('id')[first.id] === first);
   });
 
   QUnit.test('Underscore methods with object-style and property-style iteratee', function(assert) {
@@ -1840,22 +1839,6 @@
       assert.equal(options.changes.merged.length, 2);
     });
     collection.set([{id: 1}, {id: 2}]);
-  });
-
-  QUnit.test('#3610 - invoke collects arguments', function(assert) {
-    assert.expect(3);
-    var Model = Backbone.Model.extend({
-      method: function(x, y, z) {
-        assert.equal(x, 1);
-        assert.equal(y, 2);
-        assert.equal(z, 3);
-      }
-    });
-    var Collection = Backbone.Collection.extend({
-      model: Model
-    });
-    var collection = new Collection([{id: 1}]);
-    collection.invoke('method', 1, 2, 3);
   });
 
   QUnit.test('#3662 - triggering change without model will not error', function(assert) {
